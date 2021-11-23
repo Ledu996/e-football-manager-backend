@@ -1,0 +1,12 @@
+{
+  "name": "e-football-menager-backend",
+  "version": "1.0.0",
+  "description": "Server for handling football manager web app ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Dusan Andrejevic",
+  "license": "ISC"
+}
