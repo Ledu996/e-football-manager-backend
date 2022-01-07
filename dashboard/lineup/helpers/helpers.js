@@ -37,7 +37,6 @@ helpers.setAppropriateFormations = (lineupArr, playersArr, callback) => { // tre
             const allreadyAdded = lineup['firstTeam'].find((firstTeamPl) => {
                 return firstTeamPl.player_id === pl.player_id;
             })
-            console.log('AllReadyAdded: ', allreadyAdded);
             return !allreadyAdded;
         })  
               
