@@ -7,7 +7,7 @@
 const manUPlayers = require('./teams/manchester_united/players');
 const livPlayers = require('./teams/liverpool/players');
 
-const players = `INSERT IGNORE INTO player (firstname, lastname, position, nacionality, age, pl_team_id, number) VALUES
+const players = `INSERT IGNORE INTO player (firstname, lastname, position, nacionality, age, pl_team_id, number, rating) VALUES
 ${manUPlayers},
 ${livPlayers},
 

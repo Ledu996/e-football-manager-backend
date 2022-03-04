@@ -12,7 +12,7 @@ helpers.setDateRounds = (callback) => {
     let newDate;    
         
         day = day + 7 < mounths[month - 1] ? day + 7 : day + 7 - mounths[month - 1]; //day > mounths[month - 1] ? 1 : day += 7; 
-        month = day < mounths[month - 1] ? month : month + 1; 
+        month = day + 7 < mounths[month - 1] ? month : month + 1; 
         year = month < 12 ? year : year++;
                 
         newDate =  `${year}-${month}-${day}`;

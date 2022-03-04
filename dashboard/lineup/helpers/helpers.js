@@ -1,8 +1,10 @@
 const helpers = {};
-
+const db = require('../../../config/db')
 
 helpers.getMaxPlayer = (groupOfPlayers) => {
     //let max = groupOfPlayers.reduce((a, b) => {return Math.max(a['rating'], b['rating'])});
+    //console.log(groupOfPlayers);
+    
     let max = groupOfPlayers[0];
 
     for(let i = 1; i < groupOfPlayers.length; i++) {
@@ -10,47 +12,73 @@ helpers.getMaxPlayer = (groupOfPlayers) => {
             max = groupOfPlayers[i];
         }
     }
-    console.log('Max', max);
-    return max;
+     return max;
 }
 
 
-helpers.getPosition = (position, players) => {
-    let filterArray = players.filter((el) => el['position'] === position);
+helpers.getPosition = (position, players) => { // position, players
+    let filterArray = players.filter((el) => el['position'].includes(position)); // === position
+    console.log(filterArray);
     return helpers.getMaxPlayer(filterArray);
-
 }
 
-helpers.setAppropriateFormations = (lineupArr, playersArr, callback) => { // treba menjati original niz 
-    console.log(lineupArr);
+
+
+helpers.setAppropriateFormations =  (lineupSchema, callback) => { // palyersArr
+    
     let lineup = {
         'firstTeam': [],
         'substatutes':[], 
         'outOfOrder': [],
     };
-     // menjati playersArr kroz svaku iteraciju
 
-    for(let i = 0; i < lineupArr.length; i++) {
-        let position =  lineupArr[i]; 
-        
-        let availablePlayers = playersArr.filter((pl) => {
-            const allreadyAdded = lineup['firstTeam'].find((firstTeamPl) => {
-                return firstTeamPl.player_id === pl.player_id;
-            })
-            return !allreadyAdded;
-        })  
-              
-        let player = helpers.getPosition(position, availablePlayers);
-        console.log(availablePlayers, player, position);
-        if(player) {
-        lineup['firstTeam'].push(player); 
+    
+    let lineupArr = lineupSchema.split('/');
+    console.log(lineupArr);
+    db.query('SELECT * FROM player WHERE pl_team_id = 1', (err, playersArr) => {
+
+        for(let i = 0; i < lineupArr.length; i++) {
+            let position =  lineupArr[i]; 
+            
+            let availablePlayers = playersArr.filter((pl) => {
+                const allreadyAdded = lineup['firstTeam'].find((firstTeamPl) => {
+                    return firstTeamPl.player_id === pl.player_id;
+                })
+                return !allreadyAdded;
+            })  
+                  
+            let player = helpers.getPosition(position, availablePlayers);
+
+            if(player) {
+            lineup['firstTeam'].push(player); 
+            }
+            
         }
+        console.log(lineup);
+        callback(lineup);
+    });
 
-    }
-    callback(lineup); // napraviti pod niz od zadatog parametra. Poredti ratings i najboljeg pushovati u niz
+        
+
+    
+         // napraviti pod niz od zadatog parametra. Poredti ratings i najboljeg pushovati u niz
+    
+
+    
+     
+    
 }
 
 
 
 
 module.exports = helpers;
+
+
+
+
+
+
+
+
+    

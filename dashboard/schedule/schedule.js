@@ -4,6 +4,7 @@ const helpers = require('./helpers/helpers');
 
 const Scedule = {};
 
+
 /*
 team as t ON g.team_home = t.team_id `; INNER JOIN 
 team as t ON g.team_home = t.team_id `;
@@ -70,7 +71,7 @@ Scedule.getScedule = (callback) => {
                         setTimeout(() => {
                             rounds.push({
                                 id: round[i].id,
-                                number: `Round ${round[i].number}`,
+                                number: `Matchweek ${round[i].number}`,
                                 date: round[i].date,
                                 games
                             })
